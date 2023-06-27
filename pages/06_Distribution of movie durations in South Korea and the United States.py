@@ -27,16 +27,16 @@ if selected_tab == "South Korea":
     duration = sk_movies_data['duration'].str.replace(' min', '').astype(int)
 
     # 그래프 설정
-    plt.figure(figsize=(10, 6))
-    sns.distplot(duration, bins=30, hist=True, kde=True, color='red')
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.histplot(duration, bins=30, kde=True, color='red', ax=ax)
 
     # 그래프 제목과 축 레이블 설정
-    plt.title('Distribution of Movie Durations for Netflix Content in South Korea')
-    plt.xlabel('Duration (minutes)')
-    plt.ylabel('Density')
+    ax.set_title('Distribution of Movie Durations for Netflix Content in South Korea')
+    ax.set_xlabel('Duration (minutes)')
+    ax.set_ylabel('Density')
 
     # 그래프 출력
-    st.pyplot(plt)
+    st.pyplot(fig)
 
 elif selected_tab == "United States":
     # 미국에서 제작된 영화 데이터 필터링
@@ -45,16 +45,16 @@ elif selected_tab == "United States":
     duration = usa_movies_data['duration'].str.replace(' min', '').astype(int)
 
     # 그래프 설정
-    plt.figure(figsize=(10, 6))
-    sns.distplot(duration, bins=30, hist=True, kde=True, color='green')
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.histplot(duration, bins=30, kde=True, color='green', ax=ax)
 
     # 그래프 제목과 축 레이블 설정
-    plt.title('Distribution of Movie Durations for Netflix Content in the United States')
-    plt.xlabel('Duration (minutes)')
-    plt.ylabel('Density')
+    ax.set_title('Distribution of Movie Durations for Netflix Content in the United States')
+    ax.set_xlabel('Duration (minutes)')
+    ax.set_ylabel('Density')
 
     # 그래프 출력
-    st.pyplot(plt)
+    st.pyplot(fig)
 
 else:  # EX 탭
     # 한국에서 제작된 영화 데이터 필터링
@@ -68,16 +68,18 @@ else:  # EX 탭
     duration_usa = usa_movies_data['duration'].str.replace(' min', '').astype(int)
 
     # 그래프 설정
-    plt.figure(figsize=(10, 6))
-    sns.distplot(duration_sk, bins=30, hist=True, kde=True, color='red', label='South Korea')
-    sns.distplot(duration_usa, bins=30, hist=True, kde=True, color='green', label='United States')
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.histplot(duration_sk, bins=30, kde=True, color='red', label='South Korea', ax=ax)
+    sns.histplot(duration_usa, bins=30, kde=True, color='green', label='United
 
-    # 그래프 제목과
-    plt.title('Distribution of Movie Durations for Netflix Content')
-    plt.xlabel('Duration (minutes)')
-    plt.ylabel('Density')
+
+    # 그래프 제목과 축 레이블 설정
+ax.set_title('Distribution of Movie Durations for Netflix Content')
+ax.set_xlabel('Duration (minutes)')
+ax.set_ylabel('Density')
+
 # 범례 추가
-    plt.legend()
+ax.legend()
 
 # 그래프 출력
-    st.pyplot(plt)
+st.pyplot(fig)
