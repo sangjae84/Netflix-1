@@ -9,11 +9,10 @@ st.title("Number of Movies and TV shows in South Korea and the United States")
 
 df = common.get_sales()
 
-
 # Tab 구성
-tab1, tab2, tab3 = st.columns(3)
+tab1, tab2, tab3 = = st.tabs(["South Korea", "United States", "Comparison"])
+
 with tab1:
-    st.title('South Korea')
     sk_data_counts = sk_data['type'].value_counts()
     colors = ['violet', 'mistyrose']
     plt.pie(sk_data_counts, labels=sk_data_counts.index, autopct='%1.1f%%', startangle=90,
@@ -24,7 +23,6 @@ with tab1:
     st.pyplot()
 
 with tab2:
-    st.title('United States')
     usa_data_counts = usa_data['type'].value_counts()
     colors = ['green', 'mistyrose']
     plt.pie(usa_data_counts, labels=usa_data_counts.index, autopct='%1.1f%%', startangle=90,
@@ -35,7 +33,6 @@ with tab2:
     st.pyplot()
 
 with tab3:
-    st.title('Comparison')
     sk_data_counts = sk_data['type'].value_counts()
     usa_data_counts = usa_data['type'].value_counts()
     fig, ax = plt.subplots()
