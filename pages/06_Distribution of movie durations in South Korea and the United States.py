@@ -17,7 +17,9 @@ tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
 sk_data_counts = sk_data['type'].value_counts()
 usa_data_counts = usa_data['type'].value_counts()
 
-
+tab1.write(sk_data)
+tab2.write(usa_data)
+tab3.write(sk_data, usa_data)
 
 st.title("South Korea-Data")
 sk_data = data[data['country'] == 'South Korea']
@@ -31,19 +33,19 @@ st.write(usa_data)
 
 with tab1:
     
-st.title("South Korea-Data")
-    st.write(sk_data)
+ sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
 
-    sk_movies_data = sk_data[sk_data['type'] == 'Movie']
-    duration = sk_movies_data['duration'].str.replace(' min', '').astype(int)
+ duration = sk_movies_data['duration'].str.replace(' min', '').astype(int)
 
-    plt.figure(figsize=(10, 6))
-    sns.distplot(duration, bins=30, hist=True, kde=True, color='red')
-    plt.title('Distribution of Movie Durations for Netflix Content in South Korea')
-    plt.xlabel('Duration (minutes)')
-    plt.ylabel('Density')
-    plt.show()
-    st.pyplot(plt)
+ plt.figure(figsize=(10, 6))
+ sns.distplot(duration, bins=30, hist=True, kde=True, color='red')
+
+ plt.title('Distribution of Movie Durations for Netflix Content in the South Korea')
+ plt.xlabel('Duration (minutes)')
+ plt.ylabel('Density')
+
+ plt.show()
+ st.pyplot(plt)
 
 with tab2:
  usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
