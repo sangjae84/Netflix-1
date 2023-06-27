@@ -1,8 +1,10 @@
 import streamlit as st
 import common
-
-common.page_config()
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
 st.title("Data")
-st.dataframe(common.get_sales(),
-             use_container_width=True,
-             hide_index=True)
+data = pd.read_csv("./netflix1.csv")
+usa_data = data[data['country'] == 'United States']
+st.write(usa_data)
