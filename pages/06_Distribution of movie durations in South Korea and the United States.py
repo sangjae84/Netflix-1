@@ -30,3 +30,29 @@ plt.ylabel('Density')
 # 그래프 출력
 plt.show()
 st.pyplot(plt)
+
+with tab2:
+
+  # 그래프 설정
+plt.figure(figsize=(10, 6))
+sns.distplot(duration, bins=30, hist=True, kde=True, color='green')
+
+# 그래프 제목과 축 레이블 설정
+plt.title('Distribution of Movie Durations for Netflix Content in the United States')
+plt.xlabel('Duration (minutes)')
+plt.ylabel('Density')
+
+# 그래프 출력
+plt.show()
+st.pyplot(plt)
+
+with tab3:
+# 그래프 제목과 축 레이블 설정
+plt.title('Distribution of Movie Durations for Netflix Content')
+plt.xlabel('Duration (minutes)')
+plt.ylabel('Density')
+# 범례 추가
+plt.legend()
+# 그래프 출력
+plt.show()
+st.pyplot(plt)
