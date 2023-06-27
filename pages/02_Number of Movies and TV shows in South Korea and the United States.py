@@ -12,6 +12,9 @@ df = common.get_sales()
 # Tab 구성
 tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
 
+sk_data = data[data['country'] == 'South Korea']
+usa_data = data[data['country'] == 'United States']
+
 sk_data_counts = sk_data['type'].value_counts()
 usa_data_counts = usa_data['type'].value_counts()
 
