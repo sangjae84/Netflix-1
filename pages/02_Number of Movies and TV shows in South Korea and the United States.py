@@ -1,10 +1,19 @@
-import streamlit as st
+iimport streamlit as st
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import common
+
+common.page_config()
+
+st.title("Number of Movies and TV shows in South Korea and the United States")
+
+df = common.get_sales()
+
 
 # Tab 구성
 tab1, tab2, tab3 = st.columns(3)
 with tab1:
-    st.title('Netflix Shows in South Korea')
+    st.title('South Korea')
     sk_data_counts = sk_data['type'].value_counts()
     colors = ['violet', 'mistyrose']
     plt.pie(sk_data_counts, labels=sk_data_counts.index, autopct='%1.1f%%', startangle=90,
@@ -15,7 +24,7 @@ with tab1:
     st.pyplot()
 
 with tab2:
-    st.title('Netflix Shows in the United States')
+    st.title('United States')
     usa_data_counts = usa_data['type'].value_counts()
     colors = ['green', 'mistyrose']
     plt.pie(usa_data_counts, labels=usa_data_counts.index, autopct='%1.1f%%', startangle=90,
@@ -26,7 +35,7 @@ with tab2:
     st.pyplot()
 
 with tab3:
-    st.title('Netflix Shows Comparison')
+    st.title('Comparison')
     sk_data_counts = sk_data['type'].value_counts()
     usa_data_counts = usa_data['type'].value_counts()
     fig, ax = plt.subplots()
