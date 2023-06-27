@@ -30,17 +30,24 @@ st.write(usa_data)
 
 
 with tab1:
-    #sk_data_counts = sk_data['type'].value_counts()
-    sk_tv_shows_data = data[(data['country'] == 'South Korea') & (data['type'] == 'TV Show')]
-    seasons = sk_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
-    plt.figure(figsize=(10, 6))
-    sns.distplot(seasons, bins=30, hist=True, kde=True, color='red')
-    plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content in the South Korea')
-    plt.xlabel('Number of Seasons')
-    plt.ylabel('Count')
-    plt.show()
-    st.pyplot(plt)
+    
 
+ sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
+
+ duration = sk_movies_data['duration'].str.replace(' min', '').astype(int)
+
+ plt.figure(figsize=(10, 6))
+ sns.distplot(duration, bins=30, hist=True, kde=True, color='red')
+
+ plt.title('Distribution of Movie Durations for Netflix Content in the South Korea')
+ plt.xlabel('Duration (minutes)')
+ plt.ylabel('Density')
+
+ plt.show()
+
+ plt.show()
+ st.pyplot(plt)
+ 
 with tab2:
     #usa_data_counts = usa_data['type'].value_counts()
     usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
