@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+common.page_config()
+
 # 데이터 필터링
 usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
 usa_seasons = usa_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
