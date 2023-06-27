@@ -1,85 +1,86 @@
 import streamlit as st
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
+import plotly.graph_objects as go
+import common
 import seaborn as sns
 
-def page_config():
-    st.set_page_config(layout="wide")
+common.page_config()
 
-def get_sales():
-    # 데이터를 가져오는 함수
-    pass
+st.title("Distribution of movie durations in South Korea and the United States")
 
-# Streamlit 앱 설정
-page_config()
-
-# 데이터 가져오기
-data = get_sales()
+data = common.get_sales()
 
 # Tab 구성
-tabs = ["South Korea", "United States", "EX"]
-selected_tab = st.sidebar.selectbox("Select a Country", tabs)
 
-if selected_tab == "South Korea":
-    # 한국에서 제작된 영화 데이터 필터링
-    sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
-    # 영상 길이 분포 계산
-    duration = sk_movies_data['duration'].str.replace(' min', '').astype(int)
+sk_data = data[data['country'] == 'South Korea']
+usa_data = data[data['country'] == 'United States']
 
-    # 그래프 설정
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.histplot(duration, bins=30, kde=True, color='red', ax=ax)
+tab1, tab2, tab3 = st.tabs(["South Korea", "United States"," EX"])
+with tab1:
+  # 그래프 설정
+sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
 
-    # 그래프 제목과 축 레이블 설정
-    ax.set_title('Distribution of Movie Durations for Netflix Content in South Korea')
-    ax.set_xlabel('Duration (minutes)')
-    ax.set_ylabel('Density')
+# 영상 길이 분포 계산
+duration = sk_movies_data['duration'].str.replace(' min', '').astype(int)
 
-    # 그래프 출력
-    st.pyplot(fig)
+# 그래프 설정
+plt.figure(figsize=(10, 6))
+sns.distplot(duration, bins=30, hist=True, kde=True, color='red')
 
-elif selected_tab == "United States":
-    # 미국에서 제작된 영화 데이터 필터링
-    usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
-    # 영상 길이 분포 계산
-    duration = usa_movies_data['duration'].str.replace(' min', '').astype(int)
-
-    # 그래프 설정
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.histplot(duration, bins=30, kde=True, color='green', ax=ax)
-
-    # 그래프 제목과 축 레이블 설정
-    ax.set_title('Distribution of Movie Durations for Netflix Content in the United States')
-    ax.set_xlabel('Duration (minutes)')
-    ax.set_ylabel('Density')
-
-    # 그래프 출력
-    st.pyplot(fig)
-
-else:  # EX 탭
-    # 한국에서 제작된 영화 데이터 필터링
-    sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
-    # 영상 길이 분포 계산
-    duration_sk = sk_movies_data['duration'].str.replace(' min', '').astype(int)
-
-    # 미국에서 제작된 영화 데이터 필터링
-    usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
-    # 영상 길이 분포 계산
-    duration_usa = usa_movies_data['duration'].str.replace(' min', '').astype(int)
-
-    # 그래프 설정
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.histplot(duration_sk, bins=30, kde=True, color='red', label='South Korea', ax=ax)
-    sns.histplot(duration_usa, bins=30, kde=True, color='green', label='United
-
-
-    # 그래프 제목과 축 레이블 설정
-ax.set_title('Distribution of Movie Durations for Netflix Content')
-ax.set_xlabel('Duration (minutes)')
-ax.set_ylabel('Density')
-
-# 범례 추가
-ax.legend()
+# 그래프 제목과 축 레이블 설정
+plt.title('Distribution of Movie Durations for Netflix Content in the South Korea')
+plt.xlabel('Duration (minutes)')
+plt.ylabel('Density')
 
 # 그래프 출력
-st.pyplot(fig)
+plt.show()
+st.pyplot(plt)
+
+with tab2:
+
+## 미국에서 제작된 영화 데이터 필터링
+usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
+
+# 영상 길이 분포 계산
+duration = usa_movies_data['duration'].str.replace(' min', '').astype(int)
+
+# 그래프 설정
+plt.figure(figsize=(10, 6))
+sns.distplot(duration, bins=30, hist=True, kde=True, color='green')
+
+# 그래프 제목과 축 레이블 설정
+plt.title('Distribution of Movie Durations for Netflix Content in the United States')
+plt.xlabel('Duration (minutes)')
+plt.ylabel('Density')
+
+# 그래프 출력
+plt.show()
+st.pyplot(plt)
+
+with tab3:
+# 그래프 설정
+plt.figure(figsize=(10, 6))
+# 한국에서 제작된 영화 데이터 필터링
+sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
+# 영상 길이 분포 계산
+duration_sk = sk_movies_data['duration'].str.replace(' min', '').astype(int)
+# 한국 영화 데이터 그래프 (막대 그래프)
+plt.hist(duration_sk, bins=30, density=True, alpha=0.5, color='red', label='South Korea')
+sns.kdeplot(duration_sk, color='red', label='South Korea')
+# 미국에서 제작된 영화 데이터 필터링
+usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
+# 영상 길이 분포 계산
+duration_usa = usa_movies_data['duration'].str.replace(' min', '').astype(int)
+# 미국 영화 데이터 그래프 (막대 그래프)
+plt.hist(duration_usa, bins=30, density=True, alpha=0.5, color='green', label='United States')
+sns.kdeplot(duration_usa, color='green', label='United States')
+# 그래프 제목과 축 레이블 설정
+plt.title('Distribution of Movie Durations for Netflix Content')
+plt.xlabel('Duration (minutes)')
+plt.ylabel('Density')
+# 범례 추가
+plt.legend()
+# 그래프 출력
+plt.show()
+st.pyplot(plt)
