@@ -9,12 +9,13 @@ st.title("Number of Movies and TV shows in South Korea and the United States")
 
 df = common.get_sales()
 
+
+tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
+
 # 'country' 열이 'United States'인 데이터 추출
 usa_data = data[data['country'] == 'United States']
 # 'country' 열이 'South Korea'인 데이터 추출
 sk_data = data[data['country'] == 'South Korea']
-
-tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
 
 
 with tab1:
