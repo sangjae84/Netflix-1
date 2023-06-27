@@ -17,3 +17,16 @@ tab1, tab2, tab3 = st.tabs(["South Korea", "United States"," "])
 sk_data = data[data['country'] == 'South Korea']
 usa_data = data[data['country'] == 'United States']
 
+with tab1:
+  # 그래프 설정
+plt.figure(figsize=(10, 6))
+sns.distplot(duration, bins=30, hist=True, kde=True, color='red')
+
+# 그래프 제목과 축 레이블 설정
+plt.title('Distribution of Movie Durations for Netflix Content in the South Korea')
+plt.xlabel('Duration (minutes)')
+plt.ylabel('Density')
+
+# 그래프 출력
+plt.show()
+st.pyplot(plt)
