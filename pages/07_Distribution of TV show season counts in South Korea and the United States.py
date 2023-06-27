@@ -1,46 +1,25 @@
 import streamlit as st
+import pandas as pd
 import matplotlib.pyplot as plt
-import plotly.graph_objects as go
-import common
+import seaborn as sns
 
-common.page_config()
+# 데이터 필터링
+usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
+usa_seasons = usa_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
 
-st.title("Distribution of genres in South Korea and the United States")
+sk_tv_shows_data = data[(data['country'] == 'South Korea') & (data['type'] == 'TV Show')]
+sk_seasons = sk_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
 
-data = common.get_sales()
+# 그래프 설정
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.distplot(usa_seasons, bins=30, hist=True, kde=True, color='green', label='USA')
+sns.distplot(sk_seasons, bins=30, hist=True, kde=True, color='red', label='South Korea')
+plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content')
+plt.xlabel('Number of Seasons')
+plt.ylabel('Density/Count')
+plt.legend()
 
-# Tab 구성
-tab1, tab2 = st.tabs(["South Korea", "United States"])
-
-sk_data = data[data['country'] == 'South Korea']
-usa_data = data[data['country'] == 'United States']
-
-data['main_genre'] = data['listed_in'].str.split(',').str[0]
-
-genre_counts = sk_data['listed_in'].str.split(',').explode().str.strip().value_counts()
-genre_counts = data['listed_in'].str.split(',').explode().str.strip().value_counts()
-
-genre_table = pd.DataFrame({'Genre': genre_counts.index, 'Count': genre_counts})
-top_10_genres = genre_table.head(10)
-
-with tab1:
-  #파이 차트
-  plt.pie(top_10_genres.Count, labels=top_10_genres.index, autopct='%1.1f%%')
-    
-  #차트 제목
-  plt.title('Netflix Shows in the South Korea')
-    
-  #출력
-  plt.show()
-  st.pyplot(plt)
-
-with tab2:
-  #파이 차트
-  plt.pie(top_10_genres.Count, labels=top_10_genres.index, autopct='%1.1f%%')
-
-  #차트 제목
-  plt.title('Netflix Shows in the United States')
-
-  #출력
-  plt.show()
-  st.pyplot(plt)
+# Streamlit 앱 설정
+st.set_page_config(layout="wide")
+st.title('TV Show Durations on Netflix')
+st.pyplot(fig)
