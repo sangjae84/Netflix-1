@@ -11,29 +11,33 @@ df = common.get_sales()
 
 tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
 
-#''type' 열 기준으로 데이터 분류
-sk_data_counts = sk_data['type'].value_counts()
- #색상 설정
-colors = ['violet', 'mistyrose']
 
 with tab1:
-   #도덧 차트 그리기
-   plt.pie(sk_data_counts, labels=sk_data_counts.index, autopct='%1.1f%%', startangle=90, wedgeprops={'edgecolor': 'white', 'width':0.7}, colors = colors)
-   plt.axis('equal')
-   plt.title('Netflix Shows in the South Korea')
-   plt.show()
+ #''type' 열 기준으로 데이터 분류
+ sk_data_counts = sk_data['type'].value_counts()
+ 
+ #색상 설정
+ colors = ['violet', 'mistyrose']
+ 
+ #도덧 차트 그리기
+ plt.pie(sk_data_counts, labels=sk_data_counts.index, autopct='%1.1f%%', startangle=90, wedgeprops={'edgecolor': 'white', 'width':0.7}, colors = colors)
+ plt.axis('equal')
+ plt.title('Netflix Shows in the South Korea')
+ plt.show()
 
-#''type' 열 기준으로 데이터 분류
-usa_data_counts = usa_data['type'].value_counts()
-#색상 설정
-colors = ['green', 'mistyrose']
-  
 with tab2:   
-  #도덧 차트 그리기
-  plt.pie(usa_data_counts, labels=usa_data_counts.index, autopct='%1.1f%%', startangle=90, wedgeprops={'edgecolor': 'white', 'width':0.7}, colors = colors)
-  plt.axis('equal')
-  plt.title('Netflix Shows in the United States')
-  plt.show()
+  #''type' 열 기준으로 데이터 분류
+ usa_data_counts = usa_data['type'].value_counts()
+ 
+ #색상 설정
+ colors = ['green', 'mistyrose']
+ 
+ #도덧 차트 그리기
+ plt.pie(usa_data_counts, labels=usa_data_counts.index, autopct='%1.1f%%', startangle=90, wedgeprops={'edgecolor': 'white', 'width':0.7}, colors = colors)
+ plt.axis('equal')
+ plt.title('Netflix Shows in the United States')
+ plt.show()
+
 
 with tab3:
    # 'type' 열 기준으로 데이터 분류
