@@ -31,7 +31,6 @@ st.write(usa_data)
 
 with tab1:
     
-
  sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
 
  duration = sk_movies_data['duration'].str.replace(' min', '').astype(int)
@@ -44,35 +43,38 @@ with tab1:
  plt.ylabel('Density')
 
  plt.show()
+ st.pyplot(plt)
+
+with tab2:
+ usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
+
+ duration = usa_movies_data['duration'].str.replace(' min', '').astype(int)
+
+ plt.figure(figsize=(10, 6))
+ sns.distplot(duration, bins=30, hist=True, kde=True, color='green')
+
+ plt.title('Distribution of Movie Durations for Netflix Content in the United States')
+ plt.xlabel('Duration (minutes)')
+ plt.ylabel('Density')
 
  plt.show()
  st.pyplot(plt)
- 
-with tab2:
-    #usa_data_counts = usa_data['type'].value_counts()
-    usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
-    seasons = usa_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
-    plt.figure(figsize=(10, 6))
-    sns.distplot(seasons, bins=30, hist=True, kde=True, color='green')
-    plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content in the United States')
-    plt.xlabel('Number of Seasons')
-    plt.ylabel('Density')
-    plt.show()
-    st.pyplot(plt)
 
 with tab3:
-    #sk_data_counts = sk_data['type'].value_counts()
-    #usa_data_counts = usa_data['type'].value_counts()
-    usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
-    usa_seasons = usa_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
-    sk_tv_shows_data = data[(data['country'] == 'South Korea') & (data['type'] == 'TV Show')]
-    sk_seasons = sk_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
-    plt.figure(figsize=(10, 6))
-    sns.distplot(usa_seasons, bins=30, hist=True, kde=True, color='green', label='USA')
-    sns.distplot(sk_seasons, bins=30, hist=True, kde=True, color='red', label='South Korea')
-    plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content')
-    plt.xlabel('Number of Seasons')
-    plt.ylabel('Density/Count')
-    plt.legend()
-    plt.show()
-    st.pyplot(plt)
+ plt.figure(figsize=(10, 6))
+ sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
+ duration_sk = sk_movies_data['duration'].str.replace(' min', '').astype(int)
+ plt.hist(duration_sk, bins=30, density=True, alpha=0.5, color='red', label='South Korea')
+ sns.kdeplot(duration_sk, color='red', label='South Korea')
+ usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
+ duration_usa = usa_movies_data['duration'].str.replace(' min', '').astype(int)
+ plt.hist(duration_usa, bins=30, density=True, alpha=0.5, color='green', label='United States')
+ sns.kdeplot(duration_usa, color='green', label='United States')
+ plt.title('Distribution of Movie Durations for Netflix Content')
+ plt.xlabel('Duration (minutes)')
+ plt.ylabel('Density')
+ plt.legend()
+# 그래프 출력 
+ plt.show()
+ st.pyplot(plt)
+
