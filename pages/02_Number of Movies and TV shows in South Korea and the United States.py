@@ -10,7 +10,7 @@ st.title("Number of Movies and TV shows in South Korea and the United States")
 df = common.get_sales()
 
 # Tab 구성
-tab1, tab2, tab3 = = st.tabs(["South Korea", "United States", "Comparison"])
+tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
 
 with tab1:
     sk_data_counts = sk_data['type'].value_counts()
