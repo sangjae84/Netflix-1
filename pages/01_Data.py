@@ -10,6 +10,6 @@ data = pd.read_csv("./netflix1.csv")
 sk_data = data[data['country'] == 'South Korea']
 st.write(sk_data)
 
-st.title("US-Data")
+st.title("United States-Data")
 usa_data = data[data['country'] == 'United States']
 st.write(usa_data)
