@@ -5,4 +5,5 @@ import common
 
 common.page_config()
 
-st.title("Number of Movies and TV shows in South Korea and the United States")
+st.title("Distribution of movie durations in South Korea and the United States")
+
