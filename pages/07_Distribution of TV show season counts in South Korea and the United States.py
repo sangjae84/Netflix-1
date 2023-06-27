@@ -1,29 +1,35 @@
 import streamlit as st
-import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-
-# 미국에서 제작된 TV 쇼 데이터 필터링
-usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
-# 영상 길이 분포 계산
-usa_seasons = usa_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
-# 한국에서 제작된 TV 쇼 데이터 필터링
-sk_tv_shows_data = data[(data['country'] == 'South Korea') & (data['type'] == 'TV Show')]
-# 영상 길이 분포 계산
-sk_seasons = sk_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
-
-# 그래프 설정
-plt.figure(figsize=(10, 6))
-sns.distplot(usa_seasons, bins=30, hist=True, kde=True, color='green', label='USA')
-sns.distplot(sk_seasons, bins=30, hist=True, kde=True, color='red', label='South Korea')
-# 그래프 제목과 축 레이블 설정
-plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content')
-plt.xlabel('Number of Seasons')
-plt.ylabel('Density/Count')
-# 범례 추가
-plt.legend()
-
-# Streamlit 앱 설정
-st.set_page_config(layout="wide")
-st.title('TV Show Durations on Netflix')
-st.pyplot(plt)
+import plotly.graph_objects as go
+import common
+common.page_config()
+st.title("Number of productions by year in South Korea and the United States")
+data = common.get_sales()
+# Tab 구성
+tab1, tab2 = st.tabs(["South Korea", "United States"])
+sk_data = data[data['country'] == 'South Korea']
+usa_data = data[data['country'] == 'United States']
+sk_type_counts = sk_data['release_year'].value_counts().sort_index()
+type_counts = usa_data['release_year'].value_counts().sort_index()
+with tab1:
+    #색깔
+  color = ['violet']
+  #선그래프
+  plt.bar(sk_type_counts.index, sk_type_counts.values, color= color)
+  plt.xlabel('Year')
+  plt.ylabel('Count')
+  plt.xticks(sk_type_counts.index, sk_type_counts.index.astype(int), rotation=45)
+  plt.title('Netflix Shows in the South Korea')
+  plt.show()
+  st.pyplot(plt)
+with tab2:
+    #색깔
+  color = ['olive']
+  #선그래프
+  plt.bar(type_counts.index, type_counts.values, color= color)
+  plt.xlabel('Year')
+  plt.ylabel('Count')
+  plt.xticks(rotation=45)
+  plt.title('Netflix Shows in the United States')
+  plt.show()
+  st.pyplot(plt)
