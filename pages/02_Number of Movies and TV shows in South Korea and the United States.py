@@ -7,7 +7,7 @@ common.page_config()
 
 st.title("Number of Movies and TV shows in South Korea and the United States")
 
-df = common.get_sales()
+data = common.get_sales()
 
 # Tab 구성
 tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
