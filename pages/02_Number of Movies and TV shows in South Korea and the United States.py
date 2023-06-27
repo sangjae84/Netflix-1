@@ -12,8 +12,11 @@ df = common.get_sales()
 # Tab 구성
 tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
 
+sk_data_counts = sk_data['type'].value_counts()
+usa_data_counts = usa_data['type'].value_counts()
+
 with tab1:
-    sk_data_counts = sk_data['type'].value_counts()
+    #sk_data_counts = sk_data['type'].value_counts()
     colors = ['violet', 'mistyrose']
     plt.pie(sk_data_counts, labels=sk_data_counts.index, autopct='%1.1f%%', startangle=90,
             wedgeprops={'edgecolor': 'white', 'width': 0.7}, colors=colors)
@@ -23,7 +26,7 @@ with tab1:
     st.pyplot()
 
 with tab2:
-    usa_data_counts = usa_data['type'].value_counts()
+    #usa_data_counts = usa_data['type'].value_counts()
     colors = ['green', 'mistyrose']
     plt.pie(usa_data_counts, labels=usa_data_counts.index, autopct='%1.1f%%', startangle=90,
             wedgeprops={'edgecolor': 'white', 'width': 0.7}, colors=colors)
@@ -33,8 +36,8 @@ with tab2:
     st.pyplot(plt)
 
 with tab3:
-    sk_data_counts = sk_data['type'].value_counts()
-    usa_data_counts = usa_data['type'].value_counts()
+    #sk_data_counts = sk_data['type'].value_counts()
+    #usa_data_counts = usa_data['type'].value_counts()
     fig, ax = plt.subplots()
     ax.plot(sk_data_counts.index, sk_data_counts, marker='o', linestyle='-', color='violet', label='South Korea')
     ax.plot(usa_data_counts.index, usa_data_counts, marker='o', linestyle='-', color='green', label='United States')
