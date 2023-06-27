@@ -12,7 +12,7 @@ st.title("Distribution of movie durations in South Korea and the United States")
 data = common.get_sales()
 
 # Tab 구성
-tab1, tab2, tab3 = st.tabs(["South Korea", "United States"," "])
+tab1, tab2, tab3 = st.tabs(["South Korea", "United States"," EX"])
 
 sk_data = data[data['country'] == 'South Korea']
 usa_data = data[data['country'] == 'United States']
