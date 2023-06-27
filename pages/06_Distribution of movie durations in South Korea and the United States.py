@@ -1,51 +1,71 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-import pandas as pd
+import plotly.graph_objects as go
 import common
 import seaborn as sns
 
 common.page_config()
-
-st.title("Distribution of movie durations in South Korea and the United States")
+st.title("Distribution of TV show season counts in South Korea and the United States")
 
 data = common.get_sales()
 
-#한국에서 제작된 영화 데이터 필터링
-sk_movies_data = data[(data['country'] == 'South Korea') & (data['type'] == 'Movie')]
-sk_durations = sk_movies_data['duration'].str.extract('(\d+)').astype(int)
+sk_data = data[data['country'] == 'South Korea']
+usa_data = data[data['country'] == 'United States']
+# Tab 구성
+tab1, tab2, tab3 = st.tabs(["South Korea", "United States", "Comparison"])
 
-#미국에서 제작된 영화 데이터 필터링
-usa_movies_data = data[(data['country'] == 'United States') & (data['type'] == 'Movie')]
-usa_durations = usa_movies_data['duration'].str.extract('(\d+)').astype(int)
+sk_data_counts = sk_data['type'].value_counts()
+usa_data_counts = usa_data['type'].value_counts()
 
-#Tab 구성
-tab1, tab2, tab3 = st.columns(3)
+
+
+st.title("South Korea-Data")
+sk_data = data[data['country'] == 'South Korea']
+st.write(sk_data)
+
+st.title("United States-Data")
+usa_data = data[data['country'] == 'United States']
+st.write(usa_data)
+
+
 
 with tab1:
-# 그래프 설정 (한국 영화)
-plt.figure(figsize=(10, 6))
-sns.histplot(sk_durations, bins=30, color='red', kde=True)
-plt.title('Distribution of Movie Durations for Netflix Content in South Korea')
-plt.xlabel('Duration (minutes)')
-plt.ylabel('Density')
-st.pyplot(plt)
+    #sk_data_counts = sk_data['type'].value_counts()
+    sk_tv_shows_data = data[(data['country'] == 'South Korea') & (data['type'] == 'TV Show')]
+    seasons = sk_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
+    plt.figure(figsize=(10, 6))
+    sns.distplot(seasons, bins=30, hist=True, kde=True, color='red')
+    plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content in the South Korea')
+    plt.xlabel('Number of Seasons')
+    plt.ylabel('Count')
+    plt.show()
+    st.pyplot(plt)
 
 with tab2:
-# 그래프 설정 (미국 영화)
-plt.figure(figsize=(10, 6))
-sns.histplot(usa_durations, bins=30, color='green', kde=True)
-plt.title('Distribution of Movie Durations for Netflix Content in the United States')
-plt.xlabel('Duration (minutes)')
-plt.ylabel('Density')
-st.pyplot(plt)
+    #usa_data_counts = usa_data['type'].value_counts()
+    usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
+    seasons = usa_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
+    plt.figure(figsize=(10, 6))
+    sns.distplot(seasons, bins=30, hist=True, kde=True, color='green')
+    plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content in the United States')
+    plt.xlabel('Number of Seasons')
+    plt.ylabel('Density')
+    plt.show()
+    st.pyplot(plt)
 
 with tab3:
-# 그래프 설정 (한국 vs. 미국 영화)
-plt.figure(figsize=(10, 6))
-sns.histplot(sk_durations, bins=30, color='red', kde=True, label='South Korea')
-sns.histplot(usa_durations, bins=30, color='green', kde=True, label='United States')
-plt.title('Distribution of Movie Durations for Netflix Content')
-plt.xlabel('Duration (minutes)')
-plt.ylabel('Density')
-plt.legend()
-st.pyplot(plt)
+    #sk_data_counts = sk_data['type'].value_counts()
+    #usa_data_counts = usa_data['type'].value_counts()
+    usa_tv_shows_data = data[(data['country'] == 'United States') & (data['type'] == 'TV Show')]
+    usa_seasons = usa_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
+    sk_tv_shows_data = data[(data['country'] == 'South Korea') & (data['type'] == 'TV Show')]
+    sk_seasons = sk_tv_shows_data['duration'].str.extract('(\d+)').astype(int)
+    plt.figure(figsize=(10, 6))
+    sns.distplot(usa_seasons, bins=30, hist=True, kde=True, color='green', label='USA')
+    sns.distplot(sk_seasons, bins=30, hist=True, kde=True, color='red', label='South Korea')
+    plt.title('Distribution of TV Show Durations (Seasons) for Netflix Content')
+    plt.xlabel('Number of Seasons')
+    plt.ylabel('Density/Count')
+    plt.legend()
+    plt.show()
+    st.pyplot(plt)
